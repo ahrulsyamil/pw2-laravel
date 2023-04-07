@@ -10,13 +10,12 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('siswa', function (Blueprint $table) {
+        Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_depan');
-            $table->string('nama_belakang');
-            $table->string('jenis_kelamin');
-            $table->string('agama');
-            $table->text('alamat');
+
+            $table->string("name");
+            $table->boolean("is_completed")->default(false);
+
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists('todos');
     }
 };

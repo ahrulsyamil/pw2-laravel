@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\TodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/siswa', [SiswaController::class, 'index']);
-Route::post('/siswa/store', [SiswaController::class, 'store']);
+Route::prefix('/todos')->group(function () {
+    Route::get('/', [TodoController::class, 'index'])->name('todos.index');
+    Route::post('/', [TodoController::class, 'store'])->name("todos.store");
+    Route::put('/{id}', [TodoController::class, 'update'])->name("todos.update");
+    Route::delete('/{id}', [TodoController::class, 'destroy'])->name("todos.destroy");
+});
