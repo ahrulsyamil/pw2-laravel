@@ -15,8 +15,12 @@ use App\Http\Controllers\SiswaController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 Route::get('/siswa', [SiswaController::class, 'index']);
-Route::post('/siswa/store', [SiswaController::class, 'store']);
+Route::post('/siswa/create', [SiswaController::class, 'create']);
+Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit']);
+Route::post('/siswa/{id}/update', [SiswaController::class, 'update']);
+Route::get('/siswa/{id}/delete', [SiswaController::class, 'delete']);
+Route::get('/siswa/{id}/profile', [SiswaController::class, 'profile']);
