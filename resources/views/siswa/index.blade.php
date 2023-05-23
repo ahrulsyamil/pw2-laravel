@@ -19,7 +19,7 @@
                                     {{ session('sukses') }}
                                 </div>
                             @endif
-
+                            <a href="/siswa/export-excel" class="btn btn-success btn-sm" target="_blank">Excel</a>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>

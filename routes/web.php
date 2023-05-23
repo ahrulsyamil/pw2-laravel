@@ -33,4 +33,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/siswa/{id}/update', [SiswaController::class, 'update']);
     Route::get('/siswa/{id}/delete', [SiswaController::class, 'delete']);
     Route::get('/siswa/{id}/profile', [SiswaController::class, 'profile']);
+    Route::get('/siswa/export-excel', [SiswaController::class, 'exportExcel']);
 });

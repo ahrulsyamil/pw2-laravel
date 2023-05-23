@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Siswa;
+use App\Exports\SiswaExport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -47,5 +49,11 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::find($id);
         return view('siswa.profile', ['siswa' => $siswa]);
+    }
+
+    public function exportExcel()
+    {
+        $nama_file = 'laporan_data_siswa_' . date('Y-m-d_H-i-s') . '.xlsx';
+        return Excel::download(new SiswaExport, $nama_file);
     }
 }
