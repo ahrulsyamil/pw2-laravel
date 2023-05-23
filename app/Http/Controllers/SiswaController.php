@@ -15,8 +15,14 @@ class SiswaController extends Controller
 
     public function create(Request $request)
     {
-        Siswa::create($request->all());
-        return redirect('/siswa')->with('sukses', 'Data berhasil di-input.');
+        $data = $request->all();
+        $check = Siswa::create($data);
+        if (!$check) {
+            $arr = array('msg' => 'Gagal simpan dengan Ajax', 'status' => false);
+        } else {
+            $arr = array('msg' => 'Sukses simpan dengan Ajax', 'status' => true);
+        }
+        return Response()->json($arr);
     }
 
     public function edit($id)
@@ -29,7 +35,7 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::find($id);
         $siswa->update($request->all());
-        if($request->hasFile('foto')){
+        if ($request->hasFile('foto')) {
             $request->file('foto')->move('uploads/foto/', $request->file('foto')->getClientOriginalName());
             $siswa->foto = $request->file('foto')->getClientOriginalName();
             $siswa->save();
