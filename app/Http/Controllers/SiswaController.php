@@ -6,6 +6,7 @@ use App\Models\Siswa;
 use App\Exports\SiswaExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class SiswaController extends Controller
 {
@@ -55,5 +56,17 @@ class SiswaController extends Controller
     {
         $nama_file = 'laporan_data_siswa_' . date('Y-m-d_H-i-s') . '.xlsx';
         return Excel::download(new SiswaExport, $nama_file);
+    }
+
+    public function pdf()
+    {
+        $data_siswa = Siswa::all();
+        return view('siswa.pdf', ['data_siswa' => $data_siswa]);
+    }
+    public function exportPdf()
+    {
+        $data_siswa = Siswa::all();
+        $pdf = PDF::loadView('siswa.pdf', ['data_siswa' => $data_siswa]);
+        return $pdf->download('laporan_data_siswa_' . date('Y-m-d_H-i-s') . '.pdf');
     }
 }

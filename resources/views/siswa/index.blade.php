@@ -20,6 +20,7 @@
                                 </div>
                             @endif
                             <a href="/siswa/export-excel" class="btn btn-success btn-sm" target="_blank">Excel</a>
+                            <a href="/siswa/export-pdf" class="btn btn-danger btn-sm" target="_blank">PDF</a>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
