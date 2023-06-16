@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class ItemModel extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'item';
+
+    public $fillable = [
+        'name',
+        'qty',
+        'price',
+        'category',
+        'supplier',
+        'location',
+        'status',
+        'description'
+    ];
+}

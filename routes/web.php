@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
+});
+
+Route::get('/dashboard', [DashboardController::class, 'index']);
+
+Route::resource('item', ItemController::class);
+Route::prefix('item')->group(function () {
+    Route::get('/pdf', [ItemController::class, 'pdf'])->name('item.pdf');
+    Route::prefix('export')->group(function () {
+        Route::get('/excel', [ItemController::class, 'export_excel'])->name('item.export.excel');
+        Route::get('/pdf', [ItemController::class, 'export_pdf'])->name('item.export.pdf');
+    });
 });
