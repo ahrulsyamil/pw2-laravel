@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Mapel;
 use Illuminate\Database\Eloquent\Model;
 
 class Siswa extends Model
@@ -29,5 +30,10 @@ class Siswa extends Model
             $series[] = Self::where('angkatan', '=', $i)->count();
         }
         return ['category' => $category, 'series' => $series];
+    }
+
+    public function mapel()
+    {
+        return $this->belongsToMany(Mapel::class)->withPivot(['nilai'])->withTimestamps();
     }
 }

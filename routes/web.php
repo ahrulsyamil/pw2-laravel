@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/siswa/export-excel', [SiswaController::class, 'exportExcel']);
     Route::get('/siswa/export-pdf', [SiswaController::class, 'exportPdf']);
     Route::get('/siswa/pdf', [SiswaController::class, 'pdf']);
+    Route::post('/siswa/{id}/addnilai', [SiswaController::class, 'addnilai']);
+    Route::get('/siswa/{id}/export-pdf-siswa', [SiswaController::class, 'exportSiswaPdf']);
 
     Route::prefix('mapel')->group(function () {
         Route::get('/', [MapelController::class, 'index']);

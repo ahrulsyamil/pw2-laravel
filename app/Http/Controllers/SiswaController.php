@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use App\Models\Mapel;
 use App\Models\Siswa;
 use App\Exports\SiswaExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use PDF;
 
 class SiswaController extends Controller
 {
@@ -49,7 +50,9 @@ class SiswaController extends Controller
     public function profile($id)
     {
         $siswa = Siswa::find($id);
-        return view('siswa.profile', ['siswa' => $siswa]);
+        $matapelajaran = Mapel::all();
+        return view('siswa.profile', ['siswa' => $siswa, 'matapelajaran' =>
+        $matapelajaran]);
     }
 
     public function exportExcel()
@@ -68,5 +71,24 @@ class SiswaController extends Controller
         $data_siswa = Siswa::all();
         $pdf = PDF::loadView('siswa.pdf', ['data_siswa' => $data_siswa]);
         return $pdf->download('laporan_data_siswa_' . date('Y-m-d_H-i-s') . '.pdf');
+    }
+
+    public function addnilai(Request $request, $id)
+    {
+        $siswa = Siswa::find($id);
+        if ($siswa->mapel()->where('mapel_id', $request->mapel)->exists()) {
+            return redirect('siswa/' . $id . '/profile')->with('error', 'Data Mata Pelajaran Sudah Ada');
+        }
+        $siswa->mapel()->attach($request->mapel, ['nilai' => $request->nilai]);
+
+        return redirect('siswa/' . $id . '/profile')->with('sukses', 'Data Berhasil diupdate');
+    }
+
+    public function exportSiswaPdf($id)
+    {
+        $siswa = Siswa::find($id);
+        $mapel = Mapel::all();
+        $pdf = PDF::loadView('siswa.siswa-pdf', ['siswa' => $siswa, 'mapel' => $mapel]);
+        return $pdf->stream();
     }
 }
