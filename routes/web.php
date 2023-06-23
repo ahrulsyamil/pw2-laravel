@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MapelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/siswa/export-excel', [SiswaController::class, 'exportExcel']);
     Route::get('/siswa/export-pdf', [SiswaController::class, 'exportPdf']);
     Route::get('/siswa/pdf', [SiswaController::class, 'pdf']);
+
+    Route::prefix('mapel')->group(function () {
+        Route::get('/', [MapelController::class, 'index']);
+        Route::post('/create', [MapelController::class, 'create']);
+        Route::get('/{id}/edit', [MapelController::class, 'edit']);
+        Route::post('/{id}/update', [MapelController::class, 'update']);
+        Route::get('/{id}/delete', [MapelController::class, 'delete']);
+    });
 });
